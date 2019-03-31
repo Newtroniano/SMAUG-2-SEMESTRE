@@ -2,8 +2,6 @@ import math , random , sys
 import pygame
 from pygame.locals import *
 
-
-
 def events():
     for event in pygame.event.get ():
         if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
@@ -12,9 +10,14 @@ def events():
 
 
 
-W , H = 1280 , 720
+
+
+W , H = 1080 , 720
 HW , HH = W / 2 , H / 2
 AREA = W * H
+
+
+
 
 
 pygame.init ()
@@ -27,7 +30,7 @@ FPS = 500
 BLACK = (0 , 0 , 0 , 255)
 WHITE = (255 , 255 , 255 , 255)
 
-bg = pygame.image.load ( "teste.png" ).convert ()
+bg = pygame.image.load ( "BG_tiled_.png" ).convert ()
 bgWidth , bgHeight = bg.get_rect ().size
 
 stageWidth = bgWidth * 2
@@ -45,6 +48,8 @@ playerVelocityY = 0
 
 # main loop
 while True:
+
+
     events ()
 
     k = pygame.key.get_pressed ()
@@ -53,10 +58,6 @@ while True:
         playerVelocityX = 1
     elif k[K_LEFT]:
         playerVelocityX = -1
-    elif k[K_DOWN]:
-        playerVelocityY += 1
-    elif k[K_UP]:
-        playerVelocityY -= 1
     else:
         playerVelocityX = 0
 
@@ -71,6 +72,11 @@ while True:
         circlePosX = startScrollingPosX
         stagePosX += -playerVelocityX
 
+
+
+
+
+
     rel_x = stagePosX % bgWidth
     DS.blit ( bg , (rel_x - bgWidth , 0) )
     if rel_x < W:
@@ -81,3 +87,6 @@ while True:
     pygame.display.update ()
     CLOCK.tick ( FPS )
     DS.fill ( BLACK )
+
+
+
