@@ -3,7 +3,7 @@ import random
 import arcade
 import os
 
-SPRITE_SCALING = 0.5
+SPRITE_SCALING = 1
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -30,6 +30,7 @@ class MyGame(arcade.Window):
         self.background = None
 
 
+
         self.player_list = None
         self.coin_list = None
 
@@ -42,15 +43,13 @@ class MyGame(arcade.Window):
 
     def setup(self):
 
-
-
-
+        self.background = arcade.load_texture ( "images/teste.png" , )
 
         self.player_list = arcade.SpriteList()
         self.wall_list = arcade.SpriteList()
 
 
-        self.player_sprite = arcade.Sprite("images/personagempng_Idle_0.png", 0.4)
+        self.player_sprite = arcade.Sprite("images/personagempng_Idle_0.png", 1)
         self.player_sprite.center_x = 64
         self.player_sprite.center_y = 270
         self.player_list.append(self.player_sprite)
@@ -68,7 +67,7 @@ class MyGame(arcade.Window):
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.wall_list)
 
 
-        arcade.set_background_color(arcade.color.AMAZON)
+
 
 
         self.view_left = 0
@@ -80,7 +79,7 @@ class MyGame(arcade.Window):
 
         arcade.start_render()
 
-
+        arcade.draw_texture_rectangle(SCREEN_WIDTH//10, SCREEN_HEIGHT//10, SCREEN_WIDTH, SCREEN_HEIGHT, self.background)
 
 
 

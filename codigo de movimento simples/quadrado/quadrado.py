@@ -30,7 +30,7 @@ FPS = 500
 BLACK = (0 , 0 , 0 , 255)
 WHITE = (255 , 255 , 255 , 255)
 
-bg = pygame.image.load ( "BG_tiled_.png" ).convert ()
+bg = pygame.image.load ( "teste.png" ).convert ()
 bgWidth , bgHeight = bg.get_rect ().size
 
 stageWidth = bgWidth * 2
