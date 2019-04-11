@@ -5,9 +5,9 @@ import os
 
 SPRITE_SCALING = 1
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-SCREEN_TITLE = "Testeeeee "
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 448
+SCREEN_TITLE = "Testeeeee"
 
 
 VIEWPORT_MARGIN = 40
@@ -43,7 +43,7 @@ class MyGame(arcade.Window):
 
     def setup(self):
 
-        self.background = arcade.load_texture ( "images/teste.png" , )
+        self.background = arcade.load_texture ( "images/BG_tiled_.png" , )
 
         self.player_list = arcade.SpriteList()
         self.wall_list = arcade.SpriteList()
@@ -51,12 +51,12 @@ class MyGame(arcade.Window):
 
         self.player_sprite = arcade.Sprite("images/personagempng_Idle_0.png", 1)
         self.player_sprite.center_x = 64
-        self.player_sprite.center_y = 270
+        self.player_sprite.center_y = 130
         self.player_list.append(self.player_sprite)
 
 
         for x in range(200, 1650, 210):
-            for y in range(0, 1000, 64):
+            for y in range(0, 100, 64):
 
                 if random.randrange(5) > 0:
                     wall = arcade.Sprite("images/box.png", SPRITE_SCALING)
@@ -79,7 +79,7 @@ class MyGame(arcade.Window):
 
         arcade.start_render()
 
-        arcade.draw_texture_rectangle(SCREEN_WIDTH//10, SCREEN_HEIGHT//10, SCREEN_WIDTH, SCREEN_HEIGHT, self.background)
+        arcade.draw_texture_rectangle(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, SCREEN_WIDTH, SCREEN_HEIGHT, self.background)
 
 
 
