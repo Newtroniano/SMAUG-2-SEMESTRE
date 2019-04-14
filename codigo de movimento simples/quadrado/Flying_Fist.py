@@ -1,10 +1,11 @@
-import math , random , sys, time
+import math, random , sys, time
 import pygame
 from pygame.locals import *
 
 import Personagem_Animacao
 import Tela_Inicial
 
+#Essa função define parametros da janela do windows que será aberta
 def events():
     for event in pygame.event.get ():
         if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
@@ -22,14 +23,17 @@ pygame.init ()
 CLOCK = pygame.time.Clock ()
 Janela = pygame.display.set_mode ( (Largura , Altura) )
 pygame.display.set_caption ( Nome_da_Janela )
-FPS = 3000
+
+#mainClock = FPS
+mainClock = pygame.time.Clock()
 
 #Esta variável controlará as telas do jogo
 Controlador_Jogo = 1
 
-#Carrega as imagem do background da fase
+#Carrega as imagem do jogo em geral
 Background_Fase = pygame.image.load ( "images/Background_Fase.png" ).convert ()
 Background_Tela_Inicial = pygame.image.load ("images/Tela_Inicial/Tela_de_Titulo.png").convert ()
+Personagem_HUD = pygame.image.load ("images/Personagem_Vida.png").convert_alpha()
 
 #Define a Altura e Largura do background
 Background_Largura , Background_Altura = Background_Fase.get_rect ().size
@@ -38,25 +42,22 @@ Background_Largura , Background_Altura = Background_Fase.get_rect ().size
 Fase_Largura = Background_Largura * 3
 #Define a posicao do background da fase em relação a janela
 Background_Fase_Posicao = 0
-
 startScrollingPosX = HW
 
+#Variaveis relacionadas ao Personagem
 circleRadius = 25
 circlePosX = circleRadius
-
 playerPosX = circleRadius+50
 playerPosY = 300
 playerVelocityX = 0
-
 playerVelocityY = 0
-mainClock = pygame.time.Clock()
+HP = 155
 
 
-Personagem_colisao_altura = 60
-Personagem_colisao_largura = 35
-
+#Musica é tocada assim que executa o jogo, mas não em loop
 Musica_Fase = pygame.mixer.music.load('Musica_SFX\Musica_Fase.wav')
 pygame.mixer.music.play()
+
 # main loop
 while True:
 
@@ -81,6 +82,8 @@ while True:
             playerVelocityY = 0.2
         else:
             playerVelocityY = 0
+
+        #Essa parte do codigo deixa a animação correspondente visivel se tiver as condições certas
         if playerVelocityY == 0 and playerVelocityX == 0 :
             Personagem_Animacao.Parado.visibility= True
             Personagem_Animacao.Andando.visibility = False
@@ -94,6 +97,7 @@ while True:
             Personagem_Animacao.Andando.visibility = False
             Personagem_Animacao.Parado.visibility = False
 
+
         #Essa parte do código da Play em TODAS as animações do personagem
         Personagem_Animacao.Parado.play()
         Personagem_Animacao.Andando.play()
@@ -104,16 +108,16 @@ while True:
         playerPosY += playerVelocityY
 
         #Essa parte do código é referente ao SideScrolling e posição do personagem na tela. Para entender, ver https://www.youtube.com/watch?v=AX8YU2hLBUg&t=478s
-        if playerPosX > Fase_Largura - circleRadius:
-            playerPosX = Fase_Largura - circleRadius
+        if playerPosX > Fase_Largura:
+            playerPosX = Fase_Largura
         if playerPosX < circleRadius:
             playerPosX = circleRadius
         if playerPosX < startScrollingPosX:
-            circlePosX = playerPosX
+            playerPosX = playerPosX
         elif playerPosX > Fase_Largura - startScrollingPosX:
-            circlePosX = playerPosX - Fase_Largura + Largura
+            playerPosX = playerPosX - Fase_Largura + Largura
         else:
-            circlePosX = startScrollingPosX
+            playerPosX = startScrollingPosX
             Background_Fase_Posicao += -playerVelocityX
 
         rel_x = Background_Fase_Posicao % Background_Largura
@@ -124,11 +128,19 @@ while True:
             Janela.blit ( Background_Fase , (rel_x , 0) )
 
         #Esta parte do código imprime na tela todas as imagens do jogo.
-        pygame.draw.circle ( Janela , (255,255,255) ,  (int(circlePosX),int(playerPosY)), 1,0)
+        Hitbox = (playerPosX, playerPosY, 100, 100)
+        #hitbox
+        pygame.draw.rect(Janela, (255,0,0), Hitbox,2 )
 
-        Personagem_Animacao.Andando.blit(Janela, (circlePosX-50, playerPosY-40))
-        Personagem_Animacao.Parado.blit(Janela, (circlePosX-50, playerPosY-40))
-        Personagem_Animacao.Batendo.blit(Janela, (circlePosX-50, playerPosY-40))
+        #Teste para ver a barra de vida diminuindo
+        if Botao_Pressionado[K_b] and HP >=0.9 :
+            HP -= 0.2
+
+        Janela.blit(Personagem_HUD, (10, 10))
+        pygame.draw.rect(Janela, (255, 255, 0), (78, 57, HP, 19), 0)
+        Personagem_Animacao.Andando.blit(Janela, (playerPosX, playerPosY))
+        Personagem_Animacao.Parado.blit(Janela, (playerPosX, playerPosY))
+        Personagem_Animacao.Batendo.blit(Janela, (playerPosX, playerPosY))
 
     # Controlador_Jogo é igual a 1, você está na tela de título
     if Controlador_Jogo == 1:
@@ -142,7 +154,4 @@ while True:
             Controlador_Jogo=0
 
     pygame.display.update ()
-    mainClock.tick(3000)
-
-
-
+    mainClock.tick(1000)

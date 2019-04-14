@@ -20,3 +20,4 @@ Batendo = pyganim.PygAnimation([('images\Personagem_Sprites\Personagem__Soco_0.p
                                  ('images\Personagem_Sprites\Personagem__Soco_2.png', 100),
                                  ('images\Personagem_Sprites\Personagem__Soco_3.png', 100),
                                  ('images\Personagem_Sprites\Personagem__Soco_4.png', 100)])
+
