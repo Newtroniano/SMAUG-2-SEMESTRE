@@ -4,6 +4,7 @@ from pygame.locals import *
 
 import Personagem_Animacao
 import Tela_Inicial
+import Inimigo
 
 #Essa função define parametros da janela do windows que será aberta
 def events():
@@ -13,7 +14,7 @@ def events():
             sys.exit ()
 
 # Propriedades da Janela a ser aberta
-Largura , Altura = 640 , 448
+Largura , Altura = 800 , 800
 HW , HH = Largura / 2 , Altura  / 2
 Area = Largura * Altura
 Nome_da_Janela = "FLYING FIST"
@@ -70,9 +71,9 @@ while True:
 
         #Essa parte do código detecta o botão pressionado e adiciona valores as variaveis de velocidade do jogador e alteram a visibilidade das animações do personagem
         if Botao_Pressionado[K_RIGHT]:
-            playerVelocityX = 0.2
+            playerVelocityX = 0.8
         elif Botao_Pressionado[K_LEFT]:
-            playerVelocityX = -0.2
+            playerVelocityX = -0.8
             Personagem_Animacao.Andando.flip(False, False)
         else:
             playerVelocityX = 0
@@ -102,6 +103,8 @@ while True:
         Personagem_Animacao.Parado.play()
         Personagem_Animacao.Andando.play()
         Personagem_Animacao.Batendo.play()
+
+        Inimigo.Parado.play()
 
         #Essa parte do código incrementa a posição do jogador com a variavel de velocidade, relativa a X e Y
         playerPosX += playerVelocityX
@@ -141,6 +144,7 @@ while True:
         Personagem_Animacao.Andando.blit(Janela, (playerPosX, playerPosY))
         Personagem_Animacao.Parado.blit(Janela, (playerPosX, playerPosY))
         Personagem_Animacao.Batendo.blit(Janela, (playerPosX, playerPosY))
+        Inimigo.Parado.blit(Janela,(playerPosX, playerPosY))
 
     # Controlador_Jogo é igual a 1, você está na tela de título
     if Controlador_Jogo == 1:
@@ -152,6 +156,8 @@ while True:
             Tela_Inicial.Tela_de_titulo_animacao.play()
         if Tela_Inicial.Tela_de_titulo_animacao.currentFrameNum == 9:
             Controlador_Jogo=0
+
+
 
     pygame.display.update ()
     mainClock.tick(1000)
