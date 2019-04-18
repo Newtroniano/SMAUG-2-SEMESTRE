@@ -30,6 +30,17 @@ mainClock = pygame.time.Clock()
 #Esta variável controlará as telas do jogo
 Controlador_Jogo = 1
 
+#Essa variável define a pontuação do jogador
+Score = 0
+
+#Essa carrega uma fonte para o projeto do jogo, definindo seu tamanho
+fonte_small = pygame.font.Font("fontes/start.ttf", 15)
+fonte_med = pygame.font.Font("fontes/start.ttf", 25)
+fonte_big = pygame.font.Font("fontes/start.ttf", 35)
+
+#Texto_Placar = fonte_small.render("Pontos:     " + str(Score), 1, (0,0,0))
+
+
 #Carrega as imagem do jogo em geral
 Background_Fase = pygame.image.load ( "images/Background_Fase.png" ).convert ()
 Background_Tela_Inicial = pygame.image.load ("images/Tela_Inicial/Tela_de_Titulo.png").convert ()
@@ -130,11 +141,14 @@ while True:
         #Esta parte do código imprime na tela todas as imagens do jogo.
         Hitbox = (playerPosX, playerPosY, 100, 100)
         #hitbox
+        Texto_Placar = fonte_small.render("Pontos:     " + str(Score), 1, (0, 0, 0))
+        Janela.blit(Texto_Placar, (390, 10))
         pygame.draw.rect(Janela, (255,0,0), Hitbox,2 )
 
         #Teste para ver a barra de vida diminuindo
         if Botao_Pressionado[K_b] and HP >=0.9 :
             HP -= 0.2
+            Score += 1
 
         Janela.blit(Personagem_HUD, (10, 10))
         pygame.draw.rect(Janela, (255, 255, 0), (78, 57, HP, 19), 0)
