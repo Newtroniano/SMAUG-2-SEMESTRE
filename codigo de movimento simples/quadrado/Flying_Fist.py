@@ -6,6 +6,8 @@ import Personagem_Animacao
 import Tela_Inicial
 import Inimigo
 
+
+
 #Essa função define parametros da janela do windows que será aberta
 def events():
     for event in pygame.event.get ():
@@ -49,11 +51,16 @@ startScrollingPosX = HW
 circleRadius = 25
 circlePosX = circleRadius
 playerPosX = circleRadius+50
-playerPosY = 300
+playerPosY: int = 300
 playerVelocityX = 0
 playerVelocityY = 0
 HP = 155
 
+#Variaveis relacionadas ao inimigo
+inimigoPosx=400
+inimigoPosy=400
+inimigoVelocitx=0
+inimigoVelocity=0
 
 #Musica é tocada assim que executa o jogo, mas não em loop
 Musica_Fase = pygame.mixer.music.load('Musica_SFX\Musica_Fase.wav')
@@ -84,6 +91,25 @@ while True:
         else:
             playerVelocityY = 0
 
+        if Botao_Pressionado[K_RIGHT]:
+            playerVelocityX = 0.8
+        elif Botao_Pressionado[K_LEFT]:
+            playerVelocityX = -0.8
+            Inimigo.Parado.flip(False, False)
+        else:
+            playerVelocityX = 0
+        if Botao_Pressionado[K_UP] and playerPosY > 250:
+            playerVelocityY = -0.2
+        elif Botao_Pressionado[K_DOWN] and playerPosY < 380:
+            playerVelocityY = 0.2
+        else:
+            playerVelocityY = 0
+
+
+
+
+
+
         #Essa parte do codigo deixa a animação correspondente visivel se tiver as condições certas
         if playerVelocityY == 0 and playerVelocityX == 0 :
             Personagem_Animacao.Parado.visibility= True
@@ -93,6 +119,14 @@ while True:
             Personagem_Animacao.Parado.visibility = False
             Personagem_Animacao.Andando.visibility = True
             Personagem_Animacao.Batendo.visibility = False
+        elif inimigoVelocitx != -20 or playerVelocityY != -20:
+            Inimigo.Parado.visibility = False
+            Inimigo.Parado.visibility = True
+            Inimigo.Parado.visibility = False
+        elif inimigoVelocity != -10 or playerVelocityY != -10:
+            Inimigo.Direita.visibility = False
+            Inimigo.Direita.visibility = True
+            Inimigo.Direita.visibility = False
         if Botao_Pressionado[K_a]:
             Personagem_Animacao.Batendo.visibility = True
             Personagem_Animacao.Andando.visibility = False
@@ -103,12 +137,14 @@ while True:
         Personagem_Animacao.Parado.play()
         Personagem_Animacao.Andando.play()
         Personagem_Animacao.Batendo.play()
-
         Inimigo.Parado.play()
+        Inimigo.Direita.play()
 
         #Essa parte do código incrementa a posição do jogador com a variavel de velocidade, relativa a X e Y
         playerPosX += playerVelocityX
         playerPosY += playerVelocityY
+        inimigoPosx += playerVelocityX
+        inimigoPosy += playerVelocityY
 
         #Essa parte do código é referente ao SideScrolling e posição do personagem na tela. Para entender, ver https://www.youtube.com/watch?v=AX8YU2hLBUg&t=478s
         if playerPosX > Fase_Largura:
@@ -144,7 +180,8 @@ while True:
         Personagem_Animacao.Andando.blit(Janela, (playerPosX, playerPosY))
         Personagem_Animacao.Parado.blit(Janela, (playerPosX, playerPosY))
         Personagem_Animacao.Batendo.blit(Janela, (playerPosX, playerPosY))
-        Inimigo.Parado.blit(Janela,(playerPosX, playerPosY))
+        Inimigo.Parado.blit(Janela,(inimigoPosx,inimigoPosy))
+        Inimigo.Direita.blit(Janela,(inimigoPosx,inimigoPosy))
 
     # Controlador_Jogo é igual a 1, você está na tela de título
     if Controlador_Jogo == 1:
