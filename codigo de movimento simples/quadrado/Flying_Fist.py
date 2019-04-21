@@ -66,8 +66,9 @@ HP = 155
 
 
 #Musica é tocada assim que executa o jogo, mas não em loop
-Musica_Fase = pygame.mixer.music.load('Musica_SFX\Musica_Fase.wav')
-pygame.mixer.music.play(-1)
+#Musica_Fase = pygame.mixer.music.load('Musica_SFX\Musica_Fase.wav')
+pygame.mixer.music.load('Musica_SFX\intro.mp3')
+pygame.mixer.music.play(1)
 
 SFX_punchMiss = pygame.mixer.Sound('Musica_SFX\SFX\Punch_1.wav')
 
@@ -148,7 +149,7 @@ while True:
         Texto_Placar = fonte_small.render("Pontos:     " + str(Score), 1, (0, 0, 0))
         Janela.blit(Texto_Placar, (390, 10))
 
-        
+
         seconds = int((pygame.time.get_ticks() - start_ticks)/1000)
         Texto_Timer = fonte_med.render(str(Timer-seconds), 1, (0, 0, 0))
         Janela.blit(Texto_Timer, ((Largura/2)-17, 10))
@@ -179,6 +180,10 @@ while True:
         if Tela_Inicial.Tela_de_titulo_animacao.currentFrameNum == 9:
             Controlador_Jogo=0
             start_ticks = pygame.time.get_ticks()
+            pygame.mixer.music.stop()
+            pygame.mixer.music.load('Musica_SFX\Musica_Fase.wav')
+            pygame.mixer.music.play(-1)
+
 
     pygame.display.update ()
     mainClock.tick(1000)
