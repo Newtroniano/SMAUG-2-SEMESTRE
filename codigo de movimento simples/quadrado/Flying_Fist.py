@@ -30,15 +30,15 @@ mainClock = pygame.time.Clock()
 #Esta variável controlará as telas do jogo
 Controlador_Jogo = 1
 
-#Essa variável define a pontuação do jogador
+#Essa variável define a pontuação do jogador, e o Timer da fase
 Score = 0
+Timer = 60
+
 
 #Essa carrega uma fonte para o projeto do jogo, definindo seu tamanho
 fonte_small = pygame.font.Font("fontes/start.ttf", 15)
 fonte_med = pygame.font.Font("fontes/start.ttf", 25)
 fonte_big = pygame.font.Font("fontes/start.ttf", 35)
-
-#Texto_Placar = fonte_small.render("Pontos:     " + str(Score), 1, (0,0,0))
 
 
 #Carrega as imagem do jogo em geral
@@ -67,7 +67,9 @@ HP = 155
 
 #Musica é tocada assim que executa o jogo, mas não em loop
 Musica_Fase = pygame.mixer.music.load('Musica_SFX\Musica_Fase.wav')
-pygame.mixer.music.play()
+pygame.mixer.music.play(-1)
+
+SFX_punchMiss = pygame.mixer.Sound('Musica_SFX\SFX\Punch_1.wav')
 
 # main loop
 while True:
@@ -78,6 +80,7 @@ while True:
 
     # Controlador_Jogo é igual a 0, você está na fase
     if Controlador_Jogo == 0:
+
 
         #Essa parte do código detecta o botão pressionado e adiciona valores as variaveis de velocidade do jogador e alteram a visibilidade das animações do personagem
         if Botao_Pressionado[K_RIGHT]:
@@ -104,6 +107,7 @@ while True:
             Personagem_Animacao.Andando.visibility = True
             Personagem_Animacao.Batendo.visibility = False
         if Botao_Pressionado[K_a]:
+            SFX_punchMiss.play
             Personagem_Animacao.Batendo.visibility = True
             Personagem_Animacao.Andando.visibility = False
             Personagem_Animacao.Parado.visibility = False
@@ -143,6 +147,14 @@ while True:
         #hitbox
         Texto_Placar = fonte_small.render("Pontos:     " + str(Score), 1, (0, 0, 0))
         Janela.blit(Texto_Placar, (390, 10))
+
+        
+        seconds = int((pygame.time.get_ticks() - start_ticks)/1000)
+        Texto_Timer = fonte_med.render(str(Timer-seconds), 1, (0, 0, 0))
+        Janela.blit(Texto_Timer, ((Largura/2)-17, 10))
+
+
+
         pygame.draw.rect(Janela, (255,0,0), Hitbox,2 )
 
         #Teste para ver a barra de vida diminuindo
@@ -166,6 +178,7 @@ while True:
             Tela_Inicial.Tela_de_titulo_animacao.play()
         if Tela_Inicial.Tela_de_titulo_animacao.currentFrameNum == 9:
             Controlador_Jogo=0
+            start_ticks = pygame.time.get_ticks()
 
     pygame.display.update ()
     mainClock.tick(1000)
