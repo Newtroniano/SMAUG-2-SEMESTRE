@@ -15,7 +15,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/player.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1156">
+            <state relative-caret-position="119">
               <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
               <folding>
                 <element signature="e#1#14#0" expanded="true" />
@@ -27,8 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Flying_Fist.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3110">
-              <caret line="184" column="37" selection-start-line="184" selection-start-column="37" selection-end-line="184" selection-end-column="37" />
+            <state relative-caret-position="169">
+              <caret line="46" column="81" lean-forward="true" selection-start-line="46" selection-start-column="81" selection-end-line="46" selection-end-column="81" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -341,6 +341,16 @@
     <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python36/site-packages/pyganim/__init__.py" />
     <entry file="file://$USER_HOME$/.PyCharmCE2018.3/system/python_stubs/114436222/pygame/draw.py" />
     <entry file="file://$PROJECT_DIR$/../../../../Pyganim/examples/sprite_sheet_demo.py" />
+    <entry file="file://$PROJECT_DIR$/player.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+          <folding>
+            <element signature="e#1#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Personagem_Animacao.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -355,20 +365,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/player.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1156">
-          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-          <folding>
-            <element signature="e#1#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Flying_Fist.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3110">
-          <caret line="184" column="37" selection-start-line="184" selection-start-column="37" selection-end-line="184" selection-end-column="37" />
+        <state relative-caret-position="169">
+          <caret line="46" column="81" lean-forward="true" selection-start-line="46" selection-start-column="81" selection-end-line="46" selection-end-column="81" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>

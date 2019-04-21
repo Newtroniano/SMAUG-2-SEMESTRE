@@ -36,7 +36,7 @@ Timer = 60
 
 
 #Essa carrega uma fonte para o projeto do jogo, definindo seu tamanho
-fonte_small = pygame.font.Font("fontes/start.ttf", 15)
+fonte_small = pygame.font.Font("fontes/start.ttf", 18)
 fonte_med = pygame.font.Font("fontes/start.ttf", 25)
 fonte_big = pygame.font.Font("fontes/start.ttf", 35)
 
@@ -146,8 +146,8 @@ while True:
         #Esta parte do código imprime na tela todas as imagens do jogo.
         Hitbox = (playerPosX, playerPosY, 100, 100)
         #hitbox
-        Texto_Placar = fonte_small.render("Pontos:     " + str(Score), 1, (0, 0, 0))
-        Janela.blit(Texto_Placar, (390, 10))
+        Texto_Placar = fonte_small.render(str(Score), 1, (0, 0, 0))
+        Janela.blit(Texto_Placar, (190, 30))
 
 
         seconds = int((pygame.time.get_ticks() - start_ticks)/1000)
