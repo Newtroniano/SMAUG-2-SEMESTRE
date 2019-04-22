@@ -12,6 +12,48 @@ def events():
             pygame.quit ()
             sys.exit ()
 
+
+
+# Variaveis para classe
+Andando = Personagem_Animacao.Andando
+AndandoEsquerda = Personagem_Animacao.Andando
+Batendo = Personagem_Animacao.Batendo
+Parado = Personagem_Animacao.Parado
+
+#class player
+class player ( object ):
+    def __init__(self , x , y , altura , largura):
+
+        self.x = x
+        self.y = y
+        self.esquerda = False
+        self.direita = False
+        self.parado = True
+        self.altura = altura
+        self.largura = largura
+        self.contatordepassos = 0
+        self.vel = 5
+        self.hitbox = (self.x + 17 , self.y + 11 , 29 , 52)
+
+    def draw(self , Janela):
+        if self.contatordepassos + 1 >= 27:
+            self.contatordepassos = 0
+
+        if not (self.parado):
+            if self.esquerda:
+                Janela.blit ( AndandoEsquerda[self.contatordepassos // 3] , (self.x , self.y) )
+                self.contatordepassos += 1
+            elif self.direita:
+                Janela.blit ( Andando[self.contatordepassos // 3] , (self.x , self.y) )
+                self.contatordepassos += 1
+        else:
+            if self.direita:
+                Janela.blit ( AndandoEsquerda[0] , (self.x , self.y) )
+            else:
+                Janela.blit ( Andando[0] , (self.x , self.y) )
+        self.hitbox = (self.x + 17 , self.y + 11 , 29 , 52)
+
+
 # Propriedades da Janela a ser aberta
 Largura , Altura = 640 , 448
 HW , HH = Largura / 2 , Altura  / 2
@@ -77,7 +119,17 @@ SFX_Miss = pygame.mixer.Sound('Musica_SFX\SFX\Punch_miss.wav')
 SFX_Death = pygame.mixer.Sound('Musica_SFX\SFX\Death.wav')
 
 # main loop
-while True:
+
+#chama todos os parametros da classe Player
+man = player(200, 410, 64,64)
+run = True
+
+man.vel=playerVelocityX
+man.vel=playerVelocityY
+
+
+while run:
+    CLOCK.tick(0)
 
     events ()
     #A variável Botao_Pressionado coleta a tecla que você está apertando
@@ -90,10 +142,22 @@ while True:
         #Essa parte do código detecta o botão pressionado e adiciona valores as variaveis de velocidade do jogador e alteram a visibilidade das animações do personagem
         if Botao_Pressionado[K_RIGHT]:
             playerVelocityX = 0.2
+            man.x += man.vel
+            man.esquerda = True
+            man.direita = False
+            man.parado = False
+            man.direita = True
+
+
         elif Botao_Pressionado[K_LEFT]:
             playerVelocityX = -0.2
-            Personagem_Animacao.Andando.flip(False, False)
+            man.x -= man.vel
+            man.esquerda = True
+            man.direita = False
+            man.parado = False
+            man.parado=Andando
         else:
+
             playerVelocityX = 0
         if Botao_Pressionado[K_UP] and playerPosY > 250:
             playerVelocityY = -0.2
@@ -101,6 +165,10 @@ while True:
             playerVelocityY = 0.2
         else:
             playerVelocityY = 0
+            man.direita = False
+            man.esquerda = False
+            man.contatordepassos = 0
+            man.parado = True
 
         #Essa parte do codigo deixa a animação correspondente visivel se tiver as condições certas
         if playerVelocityY == 0 and playerVelocityX == 0 :
