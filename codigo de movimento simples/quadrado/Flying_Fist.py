@@ -5,6 +5,7 @@ from pygame.locals import *
 import Personagem_Animacao
 import Tela_Inicial
 import Inimigo
+import Outro_personagem
 
 
 
@@ -56,11 +57,19 @@ playerVelocityX = 0
 playerVelocityY = 0
 HP = 155
 
+#Variaveis relacionadas ao Outro Personagem
+player2Posx=300
+player2Posy=300
+player2Velocityx=0
+player2Velocityy=0
 #Variaveis relacionadas ao inimigo
-inimigoPosx=400
-inimigoPosy=400
-inimigoVelocitx=0
-inimigoVelocity=0
+inimigoPosx=300
+inimigoPosy=300
+inimigoVelocityx=0
+inimigoVelocityy=0
+seconds=0
+Inimigo_estado=3
+inimigo_timer=5
 
 #Musica é tocada assim que executa o jogo, mas não em loop
 Musica_Fase = pygame.mixer.music.load('Musica_SFX\Musica_Fase.wav')
@@ -90,12 +99,11 @@ while True:
             playerVelocityY = 0.2
         else:
             playerVelocityY = 0
-
         if Botao_Pressionado[K_RIGHT]:
             playerVelocityX = 0.8
         elif Botao_Pressionado[K_LEFT]:
             playerVelocityX = -0.8
-            Inimigo.Parado.flip(False, False)
+            Personagem_Animacao.Parado.flip(False, False)
         else:
             playerVelocityX = 0
         if Botao_Pressionado[K_UP] and playerPosY > 250:
@@ -105,12 +113,75 @@ while True:
         else:
             playerVelocityY = 0
 
+        #posição do outro player
+        if Botao_Pressionado[K_d]:
+            player2Velocityx = 0.8
+        elif Botao_Pressionado[K_q]:
+            player2VelocityY = -0.8
+            Outro_personagem.Parado.flip(False, False)
+        else:
+            player2Velocitx = 0
+        if Botao_Pressionado[K_w] and player2Posy > 150:
+            player2Velocityy = -0.2
+        elif Botao_Pressionado[K_x] and player2Posy < 200:
+            player2Velocityy = 0.2
+        else:
+            player2Velocityy = 0
+
+        if Botao_Pressionado[K_d]:
+            player2Velocitx = 0.8
+        elif Botao_Pressionado[K_q]:
+            player2VelocityY= -0.8
+            Outro_personagem.Direita.flip(False, False)
+        else:
+            inimigoVelocityx = 0
+        if Botao_Pressionado[K_w] and inimigoPosy > 250:
+            player2Velocityy = -0.2
+        elif Botao_Pressionado[K_x] and inimigoPosy < 380:
+            player2Velocityy = 0.2
+        else:
+            player2Velocityy = 0
+
+      #codigo do Inimigo
+        if inimigo_timer == 1:
+            if playerPosX > inimigoPosx:
+                inimigo_velocidadeX = 0.4
+            elif playerPosX < inimigoPosx:
+                inimigo_velocidadeX = -0.4
+            else:
+                inimigo_velocidadeX = 0
+            if playerPosY < inimigoPosy:
+                inimigo_velocidadeY = -0.5
+            elif playerPosY > inimigoPosy:
+                inimigo_velocidadeY = 0.5
+            else:
+                inimigo_velocidadeY = 0
+        else:
+            inimigo_velocidadeY = 0
+            inimigo_velocidadeX = 0
+
+        if seconds % 6 == 0:
+            Inimigo_estado = (0, 1)
+            if Inimigo_estado == 1:
+                inimigo_timer = 1
+            else:
+                inimigo_timer = 0
+
+        if inimigo_velocidadeX != 0:
+            Inimigo.Andando.visibility = True
+            Inimigo.Parado.visibility = False
+            Inimigo.Atacando.visibility = False
+        if inimigo_velocidadeY != 0:
+            Inimigo.Andando.visibility = True
+            Inimigo.Parado.visibility = False
+            Inimigo.Atacando.visibility = False
+        if inimigo_velocidadeY == 0 and inimigo_velocidadeX == 0:
+            Inimigo.Andando.visibility = False
+            Inimigo.Parado.visibility = True
+            Inimigo.Atacando.visibility = False
 
 
-
-
-
-        #Essa parte do codigo deixa a animação correspondente visivel se tiver as condições certas
+  #Essa parte do codigo deixa a animação correspondente visivel se tiver as condições certas
         if playerVelocityY == 0 and playerVelocityX == 0 :
             Personagem_Animacao.Parado.visibility= True
             Personagem_Animacao.Andando.visibility = False
@@ -119,14 +190,22 @@ while True:
             Personagem_Animacao.Parado.visibility = False
             Personagem_Animacao.Andando.visibility = True
             Personagem_Animacao.Batendo.visibility = False
-        elif inimigoVelocitx != -20 or playerVelocityY != -20:
+        elif inimigoVelocityx != -20 or inimigoVelocityy != -20:
             Inimigo.Parado.visibility = False
             Inimigo.Parado.visibility = True
             Inimigo.Parado.visibility = False
-        elif inimigoVelocity != -10 or playerVelocityY != -10:
-            Inimigo.Direita.visibility = False
-            Inimigo.Direita.visibility = True
-            Inimigo.Direita.visibility = False
+        elif inimigoVelocityy != -10 or inimigoVelocityy != -10:
+            Inimigo.Andando.visibility = False
+            Inimigo.Andando.visibility = True
+            Inimigo.Andando.visibility = False
+        elif player2Velocityx!=-10 or playerVelocityY!=-10:
+            Outro_personagem.Parado.visibility = False
+            Outro_personagem.Parado.visibility = True
+            Outro_personagem.Parado.visibility = False
+        elif player2Velocityy != -10 or player2Velocityy != -10:
+            Outro_personagem.Direita.visibility = False
+            Outro_personagem.Direita.visibility = True
+            Outro_personagem.Direita.visibility = False
         if Botao_Pressionado[K_a]:
             Personagem_Animacao.Batendo.visibility = True
             Personagem_Animacao.Andando.visibility = False
@@ -138,13 +217,13 @@ while True:
         Personagem_Animacao.Andando.play()
         Personagem_Animacao.Batendo.play()
         Inimigo.Parado.play()
-        Inimigo.Direita.play()
+        Inimigo.Andando.play()
 
         #Essa parte do código incrementa a posição do jogador com a variavel de velocidade, relativa a X e Y
         playerPosX += playerVelocityX
         playerPosY += playerVelocityY
-        inimigoPosx += playerVelocityX
-        inimigoPosy += playerVelocityY
+        inimigoPosx += inimigoVelocityx
+        inimigoPosy += inimigoVelocityy
 
         #Essa parte do código é referente ao SideScrolling e posição do personagem na tela. Para entender, ver https://www.youtube.com/watch?v=AX8YU2hLBUg&t=478s
         if playerPosX > Fase_Largura:
@@ -181,7 +260,10 @@ while True:
         Personagem_Animacao.Parado.blit(Janela, (playerPosX, playerPosY))
         Personagem_Animacao.Batendo.blit(Janela, (playerPosX, playerPosY))
         Inimigo.Parado.blit(Janela,(inimigoPosx,inimigoPosy))
-        Inimigo.Direita.blit(Janela,(inimigoPosx,inimigoPosy))
+        Outro_personagem.Parado.blit(Janela,(playerPosX,playerPosY))
+        Outro_personagem.Direita.blit(Janela,(playerPosX,playerPosY))
+        Inimigo.Andando.blit(Janela,(inimigoPosx,inimigoPosy))
+
 
     # Controlador_Jogo é igual a 1, você está na tela de título
     if Controlador_Jogo == 1:
