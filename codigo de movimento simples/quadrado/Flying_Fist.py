@@ -24,6 +24,7 @@ CLOCK = pygame.time.Clock ()
 Janela = pygame.display.set_mode ( (Largura , Altura) )
 pygame.display.set_caption ( Nome_da_Janela )
 
+
 #mainClock = FPS
 mainClock = pygame.time.Clock()
 
@@ -70,7 +71,10 @@ HP = 155
 pygame.mixer.music.load('Musica_SFX\intro.mp3')
 pygame.mixer.music.play(1)
 
-SFX_punchMiss = pygame.mixer.Sound('Musica_SFX\SFX\Punch_1.wav')
+SFX_Punch1 = pygame.mixer.Sound('Musica_SFX\SFX\Punch_1.wav')
+SFX_Punch2 = pygame.mixer.Sound('Musica_SFX\SFX\Punch_2.wav')
+SFX_Miss = pygame.mixer.Sound('Musica_SFX\SFX\Punch_miss.wav')
+SFX_Death = pygame.mixer.Sound('Musica_SFX\SFX\Death.wav')
 
 # main loop
 while True:
@@ -108,10 +112,12 @@ while True:
             Personagem_Animacao.Andando.visibility = True
             Personagem_Animacao.Batendo.visibility = False
         if Botao_Pressionado[K_a]:
-            SFX_punchMiss.play
+            SFX_Miss.play(0)
             Personagem_Animacao.Batendo.visibility = True
             Personagem_Animacao.Andando.visibility = False
             Personagem_Animacao.Parado.visibility = False
+
+
 
 
         #Essa parte do código da Play em TODAS as animações do personagem
@@ -183,6 +189,8 @@ while True:
             pygame.mixer.music.stop()
             pygame.mixer.music.load('Musica_SFX\Musica_Fase.wav')
             pygame.mixer.music.play(-1)
+
+
 
 
     pygame.display.update ()
