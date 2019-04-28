@@ -1,6 +1,9 @@
 import math, random , sys, time
 import pygame
 from pygame.locals import *
+from operator import itemgetter
+import pickle
+
 
 import Personagem_Animacao
 import Tela_Inicial
@@ -76,7 +79,32 @@ Controlador_Jogo = 1
 #Essa variável define a pontuação do jogador, e o Timer da fase
 Score = 0
 Timer = 60
+Nome_do_player = ("AKI")
 
+#Scoreboard_Player = {'Nome':Nome_do_player, 'Pontos': Score}
+
+
+
+Leaderboard = [
+{'Nome':("AAA"), 'Pontos': 3000},
+{'Nome':("AAA"), 'Pontos': 4000},
+{'Nome':("AAA"), 'Pontos': 5000},
+{'Nome':("AAA"), 'Pontos': 2000},
+{'Nome':("AAA"), 'Pontos': 300},
+]
+
+#Leaderboard.insert(0, Scoreboard_Player)
+#Leaderboard.sort(key=itemgetter('Pontos'), reverse=True)
+
+#sorted(Leaderboard, key=itemgetter('Pontos'), reverse=True)
+
+
+#pickle.dump(Leaderboard, open("top_scores", "wb"))
+Load_Top_Scores = pickle.load(open("top_scores", "rb"))
+
+
+for key in Load_Top_Scores:
+    print (key)
 
 #Essa carrega uma fonte para o projeto do jogo, definindo seu tamanho
 fonte_small = pygame.font.Font("fontes/start.ttf", 18)
@@ -135,6 +163,7 @@ while run:
     #A variável Botao_Pressionado coleta a tecla que você está apertando
     Botao_Pressionado = pygame.key.get_pressed()
 
+
     # Controlador_Jogo é igual a 0, você está na fase
     if Controlador_Jogo == 0:
 
@@ -184,6 +213,18 @@ while run:
             Personagem_Animacao.Batendo.visibility = True
             Personagem_Animacao.Andando.visibility = False
             Personagem_Animacao.Parado.visibility = False
+
+        #Teste de Leaderboards com valores atualizados
+
+        if Botao_Pressionado[K_l]:
+            Scoreboard_Player = {'Nome': Nome_do_player, 'Pontos': Score}
+            Load_Top_Scores.insert(0, Scoreboard_Player)
+            pickle.dump(Load_Top_Scores, open("top_scores", "wb"))
+            Load_Top_Scores = pickle.load(open("top_scores", "rb"))
+            Load_Top_Scores.sort(key=itemgetter('Pontos'), reverse=True)
+
+            for key in Load_Top_Scores:
+                print(key)
 
 
 
